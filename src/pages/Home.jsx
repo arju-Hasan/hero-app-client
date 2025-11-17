@@ -1,5 +1,5 @@
 import Banner from "../ui/Banner";
-// import OurApps from "../ui/OurApps";
+import OurApps from "../ui/OurApps";
 import Stats from "../ui/Stats";
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
         <Stats></Stats>
       </section>
       <section className="py-16">
-        {/* <OurApps></OurApps> */}
+        <OurApps></OurApps>
       </section>
     </div>
   );

@@ -9,16 +9,22 @@ const MyInstallation = () => {
   const allApps = useLoaderData();
   const [myApps, setMyApps] = useState([]);
 
-  useEffect(() => {
-    const apps = [];
-    myAppsIds.forEach((id) => {
+    useEffect(() => {
+    fetch(`https://hero-apps-pagination-starter-server-two.vercel.app/apps`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMyApps(data.apps);
+        myAppsIds.forEach((id) => {
       const isExist = allApps.find((app) => app._id == id);
       if (isExist) {
-        apps.push(isExist);
+        allApps.push(isExist);
       }
     });
-    setMyApps(apps);
+        console.log(data);
+      });
   }, [allApps, myAppsIds]);
+
+ 
 
   const handleSort = (type) => {
     if (type == "asc") {

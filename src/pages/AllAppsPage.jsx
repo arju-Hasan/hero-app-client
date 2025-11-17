@@ -11,19 +11,25 @@ const AllAppsPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [Sort, setSort] = useState("size");
   const [order, setOrder] = useState("");
+  const [searchText, setSearchText] = useState("");
 
- const limit =10;
+ const limit =8;
   console.log(totalPages);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/apps?limit=${limit}&skip=${ currentPage * limit}&sort=${Sort}&order=${order}`)
+    fetch(`https://hero-apps-pagination-starter-server-two.vercel.app/apps?limit=${limit}&skip=${ currentPage * limit}&sort=${Sort}&order=${order}&search=${searchText}`)
       .then((res) => res.json())
       .then((data) => {
         setApps(data.apps);
         setTotalApps(data.total);
         setTotalPages(Math.ceil(data.total / limit));
       });
-  }, [currentPage, Sort, order]);
+  }, [currentPage, Sort, order, searchText]);
+
+  const handelsearch = (e) => {
+    console.log(e.target.value);
+    setSearchText(e.target.value);
+  };
 
   const handelseclict = (e) => {
     console.log(e.target.value);
@@ -70,7 +76,7 @@ const AllAppsPage = () => {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" className="" placeholder="Search Apps" />
+            <input onChange={handelsearch} type="search" className="" placeholder="Search Apps" />
           </label>
         </form>
 
