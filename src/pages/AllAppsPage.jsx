@@ -94,11 +94,24 @@ const AllAppsPage = () => {
           )}
         </div>
       </>
+      
       <div className="flex justify-center flex-wrap gap-3 py-10">
+        {
+        currentPage > 0 && (
+          <button onClick={() => setCurrentPage((currentPage - 1))} className="btn">prev</button>
+        )
+      }
         {[...Array(totalPages).keys()].map((i) => (
-            <button onClick={()=> setCurrentPage(i)} className="btn">{i}</button>))
+            <button onClick={()=> setCurrentPage(i)} className={`btn ${ i=== currentPage ? "btn-primary" : ""}`}>{i+1}</button>))
         }
+        {
+        currentPage < totalPages-1 && (
+          <button onClick={() => setCurrentPage((currentPage + 1))} className="btn">next</button>
+        )
+      }
       </div>
+      
+        
     </div>
   );
 };
