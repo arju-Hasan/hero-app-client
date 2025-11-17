@@ -1,7 +1,7 @@
 import { DiVisualstudio } from "react-icons/di";
 import AppCard from "../ui/AppCard";
 
-import { useLoaderData } from "react-router";
+// import { useLoaderData } from "react-router";
 import { useEffect, useState } from "react";
 
 const AllAppsPage = () => {
@@ -9,18 +9,28 @@ const AllAppsPage = () => {
   const [totalApps, setTotalApps] = useState(0);
   const[totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [Sort, setSort] = useState("size");
+  const [order, setOrder] = useState("");
+
  const limit =10;
   console.log(totalPages);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/apps?limit=${limit}&skip=${ currentPage * limit}`)
+    fetch(`http://localhost:5000/apps?limit=${limit}&skip=${ currentPage * limit}&sort=${Sort}&order=${order}`)
       .then((res) => res.json())
       .then((data) => {
         setApps(data.apps);
         setTotalApps(data.total);
         setTotalPages(Math.ceil(data.total / limit));
       });
-  }, [currentPage]);
+  }, [currentPage, Sort, order]);
+
+  const handelseclict = (e) => {
+    console.log(e.target.value);
+    const sortText = e.target.value;
+    setSort(sortText.split("-")[0]);
+    setOrder(sortText.split("-")[1]);
+   }
   return (
     <div>
       <title>All Apps | Hero Apps</title>
@@ -65,7 +75,7 @@ const AllAppsPage = () => {
         </form>
 
         <div className="">
-          <select className="select bg-white">
+          <select onClick={handelseclict} className="select bg-white">
             <option selected disabled={true}>
               Sort by <span className="text-xs">R / S / D</span>
             </option>
